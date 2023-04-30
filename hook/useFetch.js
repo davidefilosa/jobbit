@@ -32,6 +32,7 @@ const useFetch = (endpoint) => {
       getCountry(loc.coords.latitude, loc.coords.longitude);
     })();
   }, []);
+
   console.log(location);
 
   const options = {
@@ -48,33 +49,31 @@ const useFetch = (endpoint) => {
     },
   };
 
-  if (location) {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.request(options);
-        setData(response.data.data);
-        setIsLoading(false);
-      } catch (error) {
-        setError(error);
-        console.error(error);
-        alert("There is an error fetching the data");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.request(options);
+      setData(response.data.data);
+      setIsLoading(false);
+    } catch (error) {
+      setError(error);
+      console.error(error);
+      alert("There is an error fetching the data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    useEffect(() => {
-      fetchData();
-    }, []);
+  useEffect(() => {
+    fetchData();
+  }, [location]);
 
-    const refetch = () => {
-      setIsLoading(true);
-      fetchData();
-    };
+  const refetch = () => {
+    setIsLoading(true);
+    fetchData();
+  };
 
-    return { data, isLoading, error, refetch };
-  }
+  return { data, isLoading, error, refetch };
 };
 
 export default useFetch;
