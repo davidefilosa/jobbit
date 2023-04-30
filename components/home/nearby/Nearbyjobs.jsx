@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,10 +14,8 @@ import useFetch from "../../../hook/useFetch";
 
 const Nearbyjobs = () => {
   const router = useRouter();
-  const { data, isLoading, error, refetch } = useFetch("search", {
-    query: "data analyst in Berlin",
-    num_pages: 2,
-  });
+
+  const { data, isLoading, error, refetch } = useFetch("search");
 
   return (
     <View style={styles.container}>

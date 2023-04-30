@@ -5,6 +5,9 @@
       "bundler": "metro"
     },
     "name": "jobbit",
-    "slug": "jobbit"
+    "slug": "jobbit",
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }
