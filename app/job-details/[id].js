@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Text,
   View,
@@ -8,6 +7,9 @@ import {
   RefreshControl,
 } from "react-native";
 import { Stack, useRouter, useSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
+import { COLORS, SIZES, icons } from "../../constants";
+import useFetch from "../../hook/useFetch";
 
 import {
   Company,
