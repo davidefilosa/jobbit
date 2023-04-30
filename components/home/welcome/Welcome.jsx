@@ -16,6 +16,7 @@ const Welcome = () => {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const jobTypes = ["Full Time", "Part Time", "Freelancer"];
+  const [activeJobType, setActiveJobType] = useState("Full Time");
 
   return (
     <View>
@@ -44,10 +45,19 @@ const Welcome = () => {
       <View style={styles.tabsContainer}>
         <FlatList
           data={jobTypes}
+          keyExtractor={(item) => item}
+          contentContainerStyle={{ columnGap: SIZES.small }}
+          horizontal
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity>
-                <Text>{item}</Text>
+              <TouchableOpacity
+                style={styles.tab(activeJobType, item)}
+                onPress={() => {
+                  setActiveJobType(item);
+                  router.push(`/search/${item}`);
+                }}
+              >
+                <Text style={styles.tabText(activeJobType, item)}>{item}</Text>
               </TouchableOpacity>
             );
           }}
