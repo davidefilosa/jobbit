@@ -5,7 +5,7 @@ import * as Location from "expo-location";
 
 const API_KEY = RAPID_API_KEY;
 
-const useFetch = (endpoint) => {
+const useFetch = (endpoint, search, localized) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -39,8 +39,8 @@ const useFetch = (endpoint) => {
     method: "GET",
     url: `https://jsearch.p.rapidapi.com/${endpoint}`,
     params: {
-      query: `data analyst in ${location}`,
-      num_pages: 2,
+      query: localized ? `${search} in ${location}` : `${search}`,
+      num_pages: 1,
     },
     headers: {
       "content-type": "application/octet-stream",
@@ -66,7 +66,7 @@ const useFetch = (endpoint) => {
 
   useEffect(() => {
     fetchData();
-  }, [location]);
+  }, []);
 
   const refetch = () => {
     setIsLoading(true);

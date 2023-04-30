@@ -15,7 +15,11 @@ import useFetch from "../../../hook/useFetch";
 const Nearbyjobs = () => {
   const router = useRouter();
 
-  const { data, isLoading, error, refetch } = useFetch("search");
+  const { data, isLoading, error, refetch } = useFetch(
+    "search",
+    "data analyst",
+    "localized"
+  );
 
   return (
     <View style={styles.container}>
