@@ -11,12 +11,12 @@ const useFetch = (endpoint) => {
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
 
-  const getCountry = async (lat, log) => {
+  const getCountry = async (lat, lon) => {
     await fetch(
-      `http://api.geonames.org/countryCodeJSON?lat=${lat}&lng=${log}&username=davideclaypool`
+      `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lon}&username=davideclaypool`
     )
       .then((resp) => resp.json())
-      .then((resp) => setLocation(resp.countryName))
+      .then((resp) => setLocation(resp.geonames[0].toponymName))
       .catch((error) => console.log(error));
   };
 
