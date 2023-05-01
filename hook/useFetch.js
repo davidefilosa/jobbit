@@ -1,53 +1,34 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { RAPID_API_KEY } from "@env";
-import * as Location from "expo-location";
 
 const API_KEY = RAPID_API_KEY;
 
-const useFetch = (endpoint, search, localized) => {
+const useFetch = (obj) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [location, setLocation] = useState(null);
-
-  const getCountry = async (lat, lon) => {
-    await fetch(
-      `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lon}&username=davideclaypool`
-    )
-      .then((resp) => resp.json())
-      .then((resp) => setLocation(resp.geonames[0].toponymName))
-      .catch((error) => console.log(error));
-  };
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setError("Permission to access location not granted");
-        return;
-      }
-
-      let loc = await Location.getCurrentPositionAsync({});
-      getCountry(loc.coords.latitude, loc.coords.longitude);
-    })();
-  }, []);
-
-  console.log(location);
 
   const options = {
     method: "GET",
-    url: `https://jsearch.p.rapidapi.com/${endpoint}`,
-    params: {
-      query: localized ? `${search} in ${location}` : `${search}`,
-      num_pages: 1,
-    },
+    url: `https://jsearch.p.rapidapi.com/${obj.endpoint}`,
+    params:
+      obj.endpoint === "search"
+        ? {
+            query:
+              obj.localized == "localized"
+                ? `${obj.search} in ${obj.location}`
+                : `${obj.search}`,
+          }
+        : { job_id: obj.id },
     headers: {
       "content-type": "application/octet-stream",
       "X-RapidAPI-Key": API_KEY,
       "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
     },
   };
+
+  console.log(options);
 
   const fetchData = async () => {
     setIsLoading(true);

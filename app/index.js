@@ -7,9 +7,11 @@ import {
   ScreenHeaderBtn,
   Welcome,
 } from "../components";
+import useLocation from "../hook/useLocation";
 
 const Home = () => {
   const router = useRouter();
+  const location = useLocation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <Stack.Screen
@@ -29,7 +31,7 @@ const Home = () => {
         <View style={{ flex: 1, padding: SIZES.medium }}>
           <Welcome />
           <Popularjobs />
-          <Nearbyjobs />
+          {location && <Nearbyjobs location={location} />}
         </View>
       </ScrollView>
     </SafeAreaView>

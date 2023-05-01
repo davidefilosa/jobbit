@@ -12,14 +12,15 @@ import { COLORS, SIZES } from "../../../constants";
 import NearbyJobCard from "../../common/cards/nearby/NearbyJobCard";
 import useFetch from "../../../hook/useFetch";
 
-const Nearbyjobs = () => {
+const Nearbyjobs = ({ location }) => {
   const router = useRouter();
 
-  const { data, isLoading, error, refetch } = useFetch(
-    "search",
-    "data analyst",
-    "localized"
-  );
+  const { data, isLoading, error, refetch } = useFetch({
+    endpoint: "search",
+    search: "data analyst",
+    localized: "localized",
+    location: location,
+  });
 
   return (
     <View style={styles.container}>
